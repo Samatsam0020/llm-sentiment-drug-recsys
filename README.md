@@ -1,5 +1,5 @@
-# 🚀 Enhancing Sentiment-driven Recommender Systems with LLM-Based Feature Engineering:
-# 💊 A Case Study in Drug Review Analysis
+# 🚀 Enhancing Sentiment-driven Recommender Systems with LLM-Based Feature Engineering: A Case Study in Drug Review Analysis 💊
+
 
 ## 📄 Paper
 
