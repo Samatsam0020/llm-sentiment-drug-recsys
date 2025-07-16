@@ -1,0 +1,291 @@
+# Sentiment Analysis Experiment Configuration
+
+experiment:
+  name: "sentiment_analysis_experiment"
+  description: "Sentiment analysis experiments for drug reviews"
+
+data:
+  train_file: "data/drugsComTrain_raw.tsv"
+  test_file: "data/drugsComTest_raw.tsv"
+  text_column: "review"
+  label_column: "rating_binary"
+
+preprocessing:
+  max_length: 512
+  truncation: true
+  padding: "max_length"
+  return_tensors: "pt"
+  stopwords: "english"
+  clean_review_pipeline: [to_lower, remove_stopwords, remove_special_characters]
+
+models:
+
+  inferSent:
+    model_name: "inferSent"
+    embedding_dim: 4096
+    batch_size: 32
+    classifiers:
+      random_forest: { type: "RandomForestClassifier", random_state: 0 }
+      extra_trees:   { type: "ExtraTreesClassifier",   random_state: 0 }
+      bi_lstm:
+        type: "BiLSTM"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Bidirectional_LSTM: { units: 150, return_sequences: true }
+          - Dropout: 0.1
+          - Bidirectional_LSTM: { units: 64 }
+          - Dense: { units: 80, activation: "relu" }
+          - Dense: { units: 1, activation: "sigmoid" }
+      dnn:
+        type: "DNN"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Dense: { units: 256, activation: "relu", input_shape: 4096 }
+          - Dropout: 0.3
+          - Dense: { units: 128, activation: "relu" }
+          - Dropout: 0.3
+          - Dense: { units: 64, activation: "relu" }
+          - Dropout: 0.2
+          - Dense: { units: 1, activation: "sigmoid" }
+      cnn:
+        type: "CNN"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Conv1D: { filters: 256, kernel_size: 3, activation: "relu", input_shape: [4096, 1] }
+          - MaxPooling1D: { pool_size: 2 }
+          - Dropout: 0.1
+          - Conv1D: { filters: 128, kernel_size: 3, activation: "relu" }
+          - MaxPooling1D: { pool_size: 2 }
+          - Dropout: 0.1
+          - Flatten: {}
+          - Dense: { units: 80, activation: "relu" }
+          - Dropout: 0.1
+          - Dense: { units: 1, activation: "sigmoid" }
+
+  llm2vec:
+    model_name: "llm2vec"
+    embedding_dim: 4096
+    batch_size: 32
+    num_classes: 2
+    classifiers:
+      random_forest: { type: "RandomForestClassifier", random_state: 0 }
+      extra_trees:   { type: "ExtraTreesClassifier",   random_state: 0 }
+      bilstm:
+        type: "BiLSTM"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Bidirectional_LSTM: { units: 150, return_sequences: true, input_shape: [1, 4096] }
+          - Dropout: 0.1
+          - Bidirectional_LSTM: { units: 64 }
+          - Dense: { units: 80, activation: "relu" }
+          - Dense: { units: 1, activation: "sigmoid" }
+      dnn:
+        type: "DNN"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Dense: { units: 256, activation: "relu", input_shape: 4096 }
+          - Dropout: 0.3
+          - Dense: { units: 128, activation: "relu" }
+          - Dropout: 0.3
+          - Dense: { units: 64, activation: "relu" }
+          - Dropout: 0.2
+          - Dense: { units: 1, activation: "sigmoid" }
+      cnn:
+        type: "CNN"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+        layers:
+          - Conv1D: { filters: 256, kernel_size: 3, activation: "relu", input_shape: [4096, 1] }
+          - MaxPooling1D: { pool_size: 2 }
+          - Dropout: 0.1
+          - Conv1D: { filters: 128, kernel_size: 3, activation: "relu" }
+          - MaxPooling1D: { pool_size: 2 }
+          - Dropout: 0.1
+          - Flatten: {}
+          - Dense: { units: 80, activation: "relu" }
+          - Dropout: 0.1
+          - Dense: { units: 1, activation: "sigmoid" }
+
+  glove:
+    model_name: "glove"
+    embedding_dim: 300
+    batch_size: 32
+    description: "GloVe-based sentiment analysis using pre-trained 300d embeddings"
+    embedding_file: "/content/drive/MyDrive/Agent_LLM_paper/glove.6B.300d.txt"
+    tokenizer:
+      lower: true
+      remove_stopwords: true
+      remove_special_characters: true
+      max_length:  # will be set to max review length in data
+      vocab_size:  # will be set after fitting on all data
+    embedding_matrix: "precomputed"
+    architecture:
+      type: "sequential"
+      layers:
+        - Embedding:
+            input_dim: ${glove.tokenizer.vocab_size}
+            output_dim: 300
+            input_length: ${glove.tokenizer.max_length}
+            weights: "pretrained"
+            trainable: false
+        - Bidirectional:
+            layer: LSTM
+            units: 150
+            return_sequences: true
+        - Dropout: 0.1
+        - Bidirectional:
+            layer: LSTM
+            units: 80
+        - Dense:
+            units: 80
+            activation: "relu"
+        - Dense:
+            units: 1
+            activation: "sigmoid"
+    optimizer: "adam"
+    loss: "binary_crossentropy"
+    metrics: ["accuracy"]
+    epochs: 5
+
+  glove_simple:
+    model_name: "glove"
+    embedding_dim: 300
+    hidden_dim: 128
+    num_classes: 2
+    dropout: 0.1
+    learning_rate: 0.001
+    batch_size: 32
+    max_epochs: 15
+
+  fasttext:
+    model_name: "fasttext"
+    embedding_dim: 300
+    tokenizer:
+      type: "keras"
+      lower: true
+      filters: ""
+      oov_token: "<OOV>"
+      vocab_size:  # will be set after fitting on all data
+      max_length:  # will be set after fitting on all data
+    embedding_matrix: "precomputed"
+    architecture:
+      bi_lstm:
+        type: "sequential"
+        layers:
+          - Embedding:
+              input_dim: ${fasttext.tokenizer.vocab_size}
+              output_dim: 300
+              input_length: ${fasttext.tokenizer.max_length}
+              weights: "pretrained"
+              trainable: false
+          - Bidirectional:
+              layer: LSTM
+              units: 150
+              return_sequences: true
+          - Dropout: 0.1
+          - Bidirectional:
+              layer: LSTM
+              units: 80
+          - Dense:
+              units: 80
+              activation: "relu"
+          - Dense:
+              units: 1
+              activation: "sigmoid"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+      cnn:
+        type: "sequential"
+        layers:
+          - Embedding:
+              input_dim: ${fasttext.tokenizer.vocab_size}
+              output_dim: 300
+              input_length: ${fasttext.tokenizer.max_length}
+              weights: "pretrained"
+              trainable: false
+          - Conv1D:
+              filters: 256
+              kernel_size: 3
+              activation: "relu"
+          - MaxPooling1D:
+              pool_size: 2
+          - Dropout: 0.1
+          - Conv1D:
+              filters: 128
+              kernel_size: 3
+              activation: "relu"
+          - MaxPooling1D:
+              pool_size: 2
+          - Dropout: 0.1
+          - Flatten: {}
+          - Dense:
+              units: 64
+              activation: "relu"
+          - Dropout: 0.1
+          - Dense:
+              units: 1
+              activation: "sigmoid"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+      dnn_mean_embedding:
+        type: "sequential"
+        input_type: "mean_embedding"
+        layers:
+          - Dense:
+              units: 256
+              activation: "relu"
+              input_shape: 300
+          - Dropout: 0.3
+          - Dense:
+              units: 128
+              activation: "relu"
+          - Dropout: 0.3
+          - Dense:
+              units: 64
+              activation: "relu"
+          - Dropout: 0.2
+          - Dense:
+              units: 1
+              activation: "sigmoid"
+        optimizer: "adam"
+        loss: "binary_crossentropy"
+        metrics: ["accuracy"]
+        epochs: 5
+      random_forest:
+        type: "RandomForestClassifier"
+        input_type: "mean_embedding"
+        random_state: 0
+      extra_trees:
+        type: "ExtraTreesClassifier"
+        input_type: "mean_embedding"
+        random_state: 0
+
+training:
+  early_stopping_patience: 5
+  early_stopping_min_delta: 0.001
+  validation_split: 0.2
+  num_workers: 4
+
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "roc_auc"]

@@ -1,0 +1,38 @@
+# Recommender System Experiment Configuration
+
+experiment:
+  name: "recommender_system_experiment"
+  description: "Recommender system experiments with sentiment features and cosine similarity ranking"
+
+
+data:
+  train_file: "data/processed/train_processed.csv"
+  val_file: "data/processed/val_processed.csv"
+  test_file: "data/processed/test_processed.csv"
+
+  item_column: "drugName_encoded"
+  rating_column: "rating"
+  sentiment_column: "sentiment_score"
+
+models:
+
+  content_based:
+    model_name: "content_based"
+    similarity_metric: "cosine"
+
+
+evaluation:
+  metrics:
+    - "hit_at_10_theta_5"
+    - "ndcg_at_10_theta_5"
+    - "mean_rating_at_10_theta_5"
+    - "hit_at_10_theta_8"
+    - "ndcg_at_10_theta_8"
+    - "mean_rating_at_10_theta_8"
+  relevance_thresholds: [5, 8]
+  k: 10
+
+recommendation:
+  top_k: 10
+
+

@@ -1,0 +1,55 @@
+# Environments and sensitive variables
+.env
+.env.*
+*.env
+
+# Jupyter notebooks and temporary outputs
+.ipynb_checkpoints/
+*.ipynb~
+
+# Log files
+*.log
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment folders
+venv/
+.env/
+.venv/
+
+# Secret configuration files
+*.secret
+*.key
+
+# Temporary results folders
+results/
+outputs/
+
+# Large dataset files
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.pkl
+*.joblib
+
+# Model folders
+models/
+checkpoints/
+
+# Build folders
+build/
+dist/
+*.egg-info/
+
+# System files
+.DS_Store
+Thumbs.db
