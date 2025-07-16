@@ -17,8 +17,6 @@ This project aims to explore and improve recommendation systems by leveraging re
 ## 🗂️Project Structure
 ```
 ├── data/                        # Raw datasets and resources
-├── docs/                        # Documentation and methodology
-│   └── methodology/
 ├── experiments/                 # Experiment configurations
 │   └── configs/
 ├── notebooks/                   # Jupyter notebooks for analysis and development
