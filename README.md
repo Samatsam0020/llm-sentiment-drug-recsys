@@ -3,7 +3,7 @@
 
 ## 📄 Paper
 
-Find the paper associated with this project here: [Link to the paper](https://arxiv.org/abs/XXXXXXXX)
+Find the paper associated with this project here: [Link to the paper](https://doi.org/10.1109/ACCESS.2025.3590326)
 
 
 ## Context
