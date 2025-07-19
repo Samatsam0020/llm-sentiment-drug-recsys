@@ -67,7 +67,7 @@ pip install -r requirements.txt
   keywords  = {Reviews; Drugs; Sentiment analysis; Recommender systems; Feature extraction; Analytical models; Accuracy; Measurement; Training; Standards; Cosine similarity ranking; Drug recommendation systems; Large Language Models; Real-world feedback in healthcare; Sentiment analysis},
   doi       = {10.1109/ACCESS.2025.3590326}
 }
-
+```
 
 
 ## References
