@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 ## Cite this paper
 ```bibtex
-@ARTICLE{11083619,
+@ARTICLE{Matia2025LLMDrugRecSys,
   author    = {Kangoni, Samuel Matia and Tshipata, Obed Tshimanga and Nzakuna, Pierre Sedi and Paciello, Vincenzo and Mboma, Jean Gilbert Mbula and Makulo, Jean Robert and Kyamakya, Kyandoghere},
   journal   = {IEEE Access}, 
   title     = {Enhancing Sentiment-driven Recommender Systems with LLM-Based Feature Engineering: A Case Study in Drug review Analysis}, 
