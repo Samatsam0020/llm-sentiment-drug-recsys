@@ -55,16 +55,18 @@ pip install -r requirements.txt
 - Adapt file paths as needed according to your environment.
 
 ## Cite this paper
+```bibtex
 @ARTICLE{11083619,
-  author={Kangoni, Samuel Matia and Tshipata, Obed Tshimanga and Nzakuna, Pierre Sedi and Paciello, Vincenzo and Mboma, Jean Gilbert Mbula and Makulo, Jean Robert and Kyamakya, Kyandoghere},
-  journal={IEEE Access}, 
-  title={Enhancing Sentiment-driven Recommender Systems with LLM-Based Feature Engineering: A Case Study in Drug review Analysis}, 
-  year={2025},
-  volume={},
-  number={},
-  pages={1-1},
-  keywords={Reviews;Drugs;Sentiment analysis;Recommender systems;Feature extraction;Analytical models;Accuracy;Measurement;Training;Standards;Cosine similarity ranking;Drug recommendation systems;Large Language Models;Real-world feedback in healthcare;Sentiment analysis},
-  doi={10.1109/ACCESS.2025.3590326}}
+  author    = {Kangoni, Samuel Matia and Tshipata, Obed Tshimanga and Nzakuna, Pierre Sedi and Paciello, Vincenzo and Mboma, Jean Gilbert Mbula and Makulo, Jean Robert and Kyamakya, Kyandoghere},
+  journal   = {IEEE Access}, 
+  title     = {Enhancing Sentiment-driven Recommender Systems with LLM-Based Feature Engineering: A Case Study in Drug review Analysis}, 
+  year      = {2025},
+  volume    = {},
+  number    = {},
+  pages     = {1--1},
+  keywords  = {Reviews; Drugs; Sentiment analysis; Recommender systems; Feature extraction; Analytical models; Accuracy; Measurement; Training; Standards; Cosine similarity ranking; Drug recommendation systems; Large Language Models; Real-world feedback in healthcare; Sentiment analysis},
+  doi       = {10.1109/ACCESS.2025.3590326}
+}
 
 
 
